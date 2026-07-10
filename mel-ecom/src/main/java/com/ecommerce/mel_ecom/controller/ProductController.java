@@ -1,9 +1,11 @@
 package com.ecommerce.mel_ecom.controller;
 
 import com.ecommerce.mel_ecom.model.Product;
+import com.ecommerce.mel_ecom.payload.CategoryDTO;
 import com.ecommerce.mel_ecom.payload.ProductDTO;
 import com.ecommerce.mel_ecom.payload.ProductResponse;
 import com.ecommerce.mel_ecom.service.ProductService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -37,7 +39,13 @@ public class ProductController {
     @GetMapping("/public/products/keyword/{keyword}")
     public ResponseEntity<ProductResponse> getProductsByKeyword(@PathVariable String keyword) {
         ProductResponse productResponse = productService.searchProductByKeyword(keyword);
-        return new ResponseEntity<>(productResponse, HttpStatus.OK);
+        return new ResponseEntity<>(productResponse, HttpStatus.FOUND);
+    }
+
+    @PutMapping("/admin/products/{productId}")
+    public ResponseEntity<ProductDTO> updateProduct(@Valid @RequestBody Product product, @PathVariable Long productId) {
+        ProductDTO updatedProductDTO = productService.updateProduct(productId, product);
+        return new ResponseEntity<>(updatedProductDTO, HttpStatus.OK);
     }
 
 }
