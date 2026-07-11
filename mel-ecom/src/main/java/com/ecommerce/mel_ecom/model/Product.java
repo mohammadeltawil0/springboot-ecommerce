@@ -23,7 +23,7 @@ public class Product {
     private String image;
 
     @NotBlank
-    @Size(min = 3, message = "Product description must contain at least 3 characters!")
+    @Size(min = 6, message = "Product description must contain at least 6 characters!")
     private String description;
     private Integer quantity;
     private double price;
@@ -34,4 +34,8 @@ public class Product {
     @ManyToOne
     @JoinColumn(name = "category_id")
     private Category category;
+
+    @ManyToOne
+    @JoinColumn(name = "seller_id")
+    private User user;
 }
