@@ -8,6 +8,7 @@ import lombok.*;
 @Data
 @Getter
 @Setter
+@AllArgsConstructor
 @NoArgsConstructor
 public class Role {
 
@@ -16,6 +17,7 @@ public class Role {
     @Column(name = "role_id")
     private Integer roleId;
 
+    @ToString.Exclude
     @Enumerated(EnumType.STRING)
     @Column(length = 20, name = "role_name")
     private AppRole roleName;
