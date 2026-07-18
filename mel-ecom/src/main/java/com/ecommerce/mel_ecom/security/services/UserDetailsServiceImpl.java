@@ -1,6 +1,7 @@
 package com.ecommerce.mel_ecom.security.services;
 
 import com.ecommerce.mel_ecom.model.User;
+import com.ecommerce.mel_ecom.respository.UserRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
