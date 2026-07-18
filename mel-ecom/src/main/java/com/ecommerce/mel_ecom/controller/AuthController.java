@@ -4,6 +4,7 @@ package com.ecommerce.mel_ecom.controller;
 import com.ecommerce.mel_ecom.model.AppRole;
 import com.ecommerce.mel_ecom.model.Role;
 import com.ecommerce.mel_ecom.model.User;
+import com.ecommerce.mel_ecom.respository.RoleRepository;
 import com.ecommerce.mel_ecom.respository.UserRepository;
 import com.ecommerce.mel_ecom.security.jwt.JwtUtils;
 import com.ecommerce.mel_ecom.security.request.LoginRequest;
