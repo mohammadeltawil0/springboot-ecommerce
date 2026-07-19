@@ -12,6 +12,7 @@ import com.ecommerce.mel_ecom.respository.CartItemRepository;
 import com.ecommerce.mel_ecom.respository.CartRepository;
 import com.ecommerce.mel_ecom.respository.ProductRepository;
 import com.ecommerce.mel_ecom.service.CartService;
+import com.ecommerce.mel_ecom.util.AuthUtil;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,7 +27,7 @@ public class CartServiceImpl implements CartService {
     CartRepository cartRepository;
 
     @Autowired
-    AuthUtil authUtil;
+    private AuthUtil authUtil;
 
     @Autowired
     ProductRepository productRepository;
@@ -57,7 +58,7 @@ public class CartServiceImpl implements CartService {
         if (product.getQuantity() == 0) {
             throw new APIException(product.getProductName() + " is out of stock!");
         }
-        if (product.getQuantity() == quantity) {
+        if (product.getQuantity() < quantity) {
             throw new APIException("Please make an order of " + product.getProductName() + " less than or equal to the current available quantity " + product.getQuantity() + "!");
         }
         // Create CartItem
@@ -71,6 +72,7 @@ public class CartServiceImpl implements CartService {
         cartItemRepository.save(newCartItem);
         product.setQuantity(product.getQuantity()); // Will reduce quantity after payments
         cart.setTotalPrice(cart.getTotalPrice() + (product.getSpecialPrice() * quantity));
+        cart.getCartItems().add(newCartItem);
         cartRepository.save(cart);
         // Return updated Cart
         CartDTO cartDTO = modelMapper.map(cart, CartDTO.class);
