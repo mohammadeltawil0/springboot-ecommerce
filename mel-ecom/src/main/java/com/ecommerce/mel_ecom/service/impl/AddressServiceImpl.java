@@ -1,5 +1,6 @@
 package com.ecommerce.mel_ecom.service.impl;
 
+import com.ecommerce.mel_ecom.exception.ResourceNotFoundException;
 import com.ecommerce.mel_ecom.model.Address;
 import com.ecommerce.mel_ecom.model.User;
 import com.ecommerce.mel_ecom.payload.AddressDTO;
@@ -43,5 +44,13 @@ public class AddressServiceImpl implements AddressService {
         return addresses.stream()
                 .map(address -> modelMapper.map(address, AddressDTO.class))
                 .toList();
+    }
+
+    @Override
+    public AddressDTO getAddressById(Long addressId) {
+
+        Address address = addressRepository.findById(addressId)
+                .orElseThrow(() -> new ResourceNotFoundException("Address", "addressId", addressId));
+        return modelMapper.map(address, AddressDTO.class) ;
     }
 }
